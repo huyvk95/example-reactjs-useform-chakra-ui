@@ -1,14 +1,18 @@
 import { PropsWithChildren } from 'react';
 
-import { Navbar, Sidebar } from './components';
-import { Content, Wrap, WrapContent } from './styles';
+import { Breadcrumb, Navbar, Sidebar } from './components';
+import { Content, Title, Wrap, WrapContent } from './styles';
 
 export const MainLayout: React.FC<PropsWithChildren> = ({ children }) => (
   <Wrap>
     <Sidebar />
     <WrapContent>
       <Navbar />
-      <Content>{children}</Content>
+      <Content>
+        <Title>Welcome To Dashboard</Title>
+        <Breadcrumb />
+        {children}
+      </Content>
     </WrapContent>
   </Wrap>
 );

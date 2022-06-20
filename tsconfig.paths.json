@@ -8,6 +8,8 @@
       "@types": ["src/types"],
       "@constants": ["src/constants"],
       "@layouts": ["src/layouts"],
+      "@styles": ["src/styles"],
+      "@assets/*": ["src/assets/*"],
       "@pages/*": ["src/pages/*"]
     }
   }

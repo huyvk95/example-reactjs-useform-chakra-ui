@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { Slice, State } from './types';
 
 const initialState: State = {
+  isSidebarCollapse: false,
   isNetworkConnecting: true,
 };
 
@@ -12,6 +13,10 @@ const slice: Slice = createSlice({
   name: 'app',
   initialState,
   reducers: {
+    toggleSidebarCollapse: (state) => ({
+      ...state,
+      isSidebarCollapse: !state.isSidebarCollapse,
+    }),
     setIsNetworkConnecting: (state, action) => ({
       ...state,
       isNetworkConnecting: action.payload,

@@ -1,11 +1,12 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { ColorModeScript, ChakraProvider, theme } from '@chakra-ui/react';
+import { ColorModeScript, ChakraProvider } from '@chakra-ui/react';
 
 import { App } from './App';
-import reportWebVitals from './reportWebVitals';
 import store from './store';
+import { theme } from './styles';
+import reportWebVitals from './reportWebVitals';
 
 const container = document.getElementById('root');
 if (!container) throw new Error('Failed to find the root element');
