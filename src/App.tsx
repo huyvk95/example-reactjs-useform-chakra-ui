@@ -1,1 +1,3 @@
-export const App = () => <div>Hello world</div>;
+import { AppRouter } from '@routers';
+
+export const App = () => <AppRouter />;
