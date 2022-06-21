@@ -1,14 +1,14 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import isPropValid from '@emotion/is-prop-valid';
 
-import { EmployeeSvg, LogoSvg } from '@assets/svgs';
-import { flexCenter } from '@styles';
-import { appSelector } from '@slices';
 import { ROUTERS } from '@constants';
-import { css } from '@emotion/react';
-import { useEffect, useState } from 'react';
+import { appSelector } from '@slices';
+import { flexCenter } from '@styles';
+import { EmployeeSvg, LogoSvg } from '@assets/svgs';
 
 // > Type
 type ItemProps = { icon: React.FC; text: string; path: string };

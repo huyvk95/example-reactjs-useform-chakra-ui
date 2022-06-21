@@ -1,3 +1,10 @@
 import { PageProps } from '@types';
 
-export const PageListEmployee: React.FC<PageProps> = () => <div>PageListEmployee</div>;
+import { EmployeeList } from './components';
+import { Wrap } from './styles';
+
+export const PageListEmployee: React.FC<PageProps> = () => (
+  <Wrap>
+    <EmployeeList />
+  </Wrap>
+);
