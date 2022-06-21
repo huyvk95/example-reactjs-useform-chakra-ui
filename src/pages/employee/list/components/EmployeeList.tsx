@@ -2,19 +2,9 @@ import styled from '@emotion/styled';
 import { useHistory } from 'react-router-dom';
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Button } from '@chakra-ui/react';
 
-import { EmployeeModel } from '@types';
-import { EMPLOYEE_ROUTERS, ROUTERS, Gender } from '@constants';
-
-const datas: EmployeeModel[] = [
-  {
-    id: '12312asdasdjal',
-    emailAddress: 'haasjdh@gmail.com',
-    firstName: 'Vajsd LKjasd akjsdla',
-    lastName: 'Vajsd LKjasd akjsdla',
-    gender: Gender.FEMALE,
-    phoneNumber: '0123456789',
-  },
-];
+import { EMPLOYEE_ROUTERS, ROUTERS } from '@constants';
+import { useSelector } from 'react-redux';
+import { employeesSelector } from '@slices';
 
 const Wrap = styled.div``;
 
@@ -32,6 +22,7 @@ const TableColumnActions = styled(Td)`
 
 export const EmployeeList: React.FC = () => {
   const history = useHistory();
+  const employees = useSelector(employeesSelector.selectEmployeesData);
 
   const onClickAdd = () => history.push(`${ROUTERS.EMPLOYEE}${EMPLOYEE_ROUTERS.ADD}`);
 
@@ -63,18 +54,18 @@ export const EmployeeList: React.FC = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {datas.map((data) => (
-              <Tr key={data.id}>
-                <Td>{data.firstName}</Td>
-                <Td>{data.lastName}</Td>
-                <Td>{data.emailAddress}</Td>
-                <Td>{data.phoneNumber}</Td>
-                <Td>{data.gender}</Td>
+            {employees.map((employee) => (
+              <Tr key={employee.id}>
+                <Td>{employee.firstName}</Td>
+                <Td>{employee.lastName}</Td>
+                <Td>{employee.emailAddress}</Td>
+                <Td>{employee.phoneNumber}</Td>
+                <Td>{employee.gender}</Td>
                 <TableColumnActions>
-                  <Button colorScheme="teal" onClick={() => onClickEdit(data.id)}>
+                  <Button colorScheme="teal" onClick={() => onClickEdit(employee.id)}>
                     Edit
                   </Button>
-                  <Button colorScheme="red" onClick={() => onClickDelete(data.id)}>
+                  <Button colorScheme="red" onClick={() => onClickDelete(employee.id)}>
                     Delete
                   </Button>
                 </TableColumnActions>

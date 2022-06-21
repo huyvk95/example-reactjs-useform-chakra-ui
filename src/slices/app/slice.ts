@@ -4,7 +4,6 @@ import { Slice, State } from './types';
 
 const initialState: State = {
   isSidebarCollapse: false,
-  isNetworkConnecting: true,
 };
 
 // > Actions
@@ -16,10 +15,6 @@ const slice: Slice = createSlice({
     toggleSidebarCollapse: (state) => ({
       ...state,
       isSidebarCollapse: !state.isSidebarCollapse,
-    }),
-    setIsNetworkConnecting: (state, action) => ({
-      ...state,
-      isNetworkConnecting: action.payload,
     }),
   },
 });

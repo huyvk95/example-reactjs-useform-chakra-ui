@@ -1,4 +1,4 @@
-import { Gender } from '@constants';
+type Gender = 'male' | 'female';
 
 export type EmployeeModel = {
   id: string;
