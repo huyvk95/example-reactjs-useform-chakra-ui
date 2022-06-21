@@ -5,11 +5,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Button } from '@chakra-ui/react';
 import type { Dispatch } from '@reduxjs/toolkit';
 
-import { Loading } from '@components';
+import { Empty, Loading } from '@components';
 import { EMPLOYEE_ROUTERS, ROUTERS } from '@constants';
 import { employeesActions, employeesSelector } from '@slices';
 
 import { DeleteConfirmModal } from './DeleteConfirmModal';
+
+const Wrap = styled.div`
+  position: relative;
+  min-height: 400px;
+`;
 
 const WrapTableHead = styled.div`
   display: flex;
@@ -17,10 +22,7 @@ const WrapTableHead = styled.div`
   margin-bottom: 10px;
 `;
 
-const WrapTable = styled(TableContainer)`
-  position: relative;
-  min-height: 400px;
-`;
+const WrapTable = styled(TableContainer)``;
 
 const TableColumnActions = styled(Td)`
   & > *:not(:last-child) {
@@ -34,7 +36,7 @@ export const EmployeeList: React.FC = () => {
   const employees = useSelector(employeesSelector.selectEmployeesData);
   const transactionGetEmployees = useSelector(employeesSelector.selectTransactionGetEmployees);
   const [deletingId, setDeletingId] = useState<string>();
-  const [loading, setIsLoading] = useState(false);
+  const [loading, setIsLoading] = useState(true);
 
   useEffect(() => {
     dispatch(employeesActions.getEmployees());
@@ -57,48 +59,54 @@ export const EmployeeList: React.FC = () => {
     setDeletingId(id);
   };
 
+  if (!loading && !employees.length) return <Empty button={{ title: 'Add', onClick: onClickAdd }} />;
+
   return (
-    <div>
-      <WrapTableHead>
-        <Button bg="primary" color="white" colorScheme="purple" onClick={onClickAdd}>
-          Add
-        </Button>
-      </WrapTableHead>
-      <WrapTable>
-        {loading && <Loading />}
-        <Table variant="simple">
-          <Thead>
-            <Tr>
-              <Th>First name</Th>
-              <Th>Last name </Th>
-              <Th>Email address</Th>
-              <Th>Phone number</Th>
-              <Th>Gender </Th>
-              <Th>Actions</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {employees.map((employee) => (
-              <Tr key={employee.id}>
-                <Td>{employee.firstName}</Td>
-                <Td>{employee.lastName}</Td>
-                <Td>{employee.emailAddress}</Td>
-                <Td>{employee.phoneNumber}</Td>
-                <Td>{employee.gender}</Td>
-                <TableColumnActions>
-                  <Button colorScheme="teal" onClick={() => onClickEdit(employee.id)}>
-                    Edit
-                  </Button>
-                  <Button colorScheme="red" onClick={() => onClickDelete(employee.id)}>
-                    Delete
-                  </Button>
-                </TableColumnActions>
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      </WrapTable>
+    <Wrap>
+      {loading && <Loading />}
+      {Boolean(employees.length) && (
+        <>
+          <WrapTableHead>
+            <Button bg="primary" color="white" colorScheme="purple" onClick={onClickAdd}>
+              Add
+            </Button>
+          </WrapTableHead>
+          <WrapTable>
+            <Table variant="simple">
+              <Thead>
+                <Tr>
+                  <Th>First name</Th>
+                  <Th>Last name </Th>
+                  <Th>Email address</Th>
+                  <Th>Phone number</Th>
+                  <Th>Gender </Th>
+                  <Th>Actions</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {employees.map((employee) => (
+                  <Tr key={employee.id}>
+                    <Td>{employee.firstName}</Td>
+                    <Td>{employee.lastName}</Td>
+                    <Td>{employee.emailAddress}</Td>
+                    <Td>{employee.phoneNumber}</Td>
+                    <Td>{employee.gender}</Td>
+                    <TableColumnActions>
+                      <Button colorScheme="teal" onClick={() => onClickEdit(employee.id)}>
+                        Edit
+                      </Button>
+                      <Button colorScheme="red" onClick={() => onClickDelete(employee.id)}>
+                        Delete
+                      </Button>
+                    </TableColumnActions>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </WrapTable>
+        </>
+      )}
       <DeleteConfirmModal isOpen={Boolean(deletingId)} onClose={() => setDeletingId(undefined)} id={deletingId} />
-    </div>
+    </Wrap>
   );
 };

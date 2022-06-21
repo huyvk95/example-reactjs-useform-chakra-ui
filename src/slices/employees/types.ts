@@ -1,5 +1,6 @@
-import { EmployeeModel, Transaction } from '@types';
 import { PayloadAction, Slice as SlideType } from '@reduxjs/toolkit';
+
+import { EmployeeModel, Transaction } from '@types';
 
 // > Redux
 export type State = {

@@ -8,6 +8,7 @@ import {
   ModalCloseButton,
   Button,
   ModalProps,
+  useToast,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,6 +21,7 @@ export const DeleteConfirmModal: React.FC<Omit<ModalProps, 'children'> & { id?: 
   onClose,
   id,
 }) => {
+  const toast = useToast();
   const dispatch = useDispatch<Dispatch<any>>();
   const transactionDeleteEmployee = useSelector(employeesSelector.selectTransactionDeleteEmployee);
   const [loading, setLoading] = useState(false);
@@ -34,6 +36,12 @@ export const DeleteConfirmModal: React.FC<Omit<ModalProps, 'children'> & { id?: 
     if (transactionDeleteEmployee.type === 'finish') {
       dispatch(employeesActions.resetTransactionDeleteEmployee());
       onClose();
+
+      toast({
+        title: 'Employee deleted.',
+        status: 'success',
+        isClosable: true,
+      });
     }
   }, [transactionDeleteEmployee]);
 

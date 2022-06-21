@@ -2,12 +2,13 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { api } from '@services';
 
-export const getEmployees = createAsyncThunk('employees/getEmployees', async (_, thunkApi) => {
+export const getEmployees = createAsyncThunk('employees/getEmployees', async () => {
   try {
     const data = await api.getEmployees();
     return data;
   } catch (error) {
-    console.log(error);
+    // eslint-disable-next-line
+    console.error(error);
   }
 });
 
@@ -18,7 +19,8 @@ export const addEmployee = createAsyncThunk(
       await api.addEmployee(params);
       thunkApi.dispatch(getEmployees());
     } catch (error) {
-      console.log(error);
+      // eslint-disable-next-line
+      console.error(error);
     }
   },
 );
@@ -30,7 +32,8 @@ export const updateEmployee = createAsyncThunk(
       await api.updateEmployee(params);
       thunkApi.dispatch(getEmployees());
     } catch (error) {
-      console.log(error);
+      // eslint-disable-next-line
+      console.error(error);
     }
   },
 );
@@ -42,7 +45,8 @@ export const deleteEmployee = createAsyncThunk(
       await api.deleteEmployee(params);
       thunkApi.dispatch(getEmployees());
     } catch (error) {
-      console.log(error);
+      // eslint-disable-next-line
+      console.error(error);
     }
   },
 );

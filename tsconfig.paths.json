@@ -11,6 +11,7 @@
       "@styles": ["src/styles"],
       "@utils": ["src/utils"],
       "@services": ["src/services"],
+      "@contents": ["src/contents"],
       "@assets/*": ["src/assets/*"],
       "@pages/*": ["src/pages/*"]
     }
