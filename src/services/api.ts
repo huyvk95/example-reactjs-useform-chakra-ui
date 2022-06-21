@@ -3,7 +3,7 @@ import { generateUUID } from '@utils';
 
 class API {
   static instance: API;
-  
+
   static getInstance() {
     if (!this.instance) this.instance = new API();
     return this.instance;
@@ -18,12 +18,17 @@ class API {
   }
 
   async wait() {
-    await new Promise((res) => setTimeout(res, Math.random() * 2000 + 500));
+    await new Promise((res) => setTimeout(res, Math.random() * 1000 + 200));
   }
 
   async getEmployees(): Promise<EmployeeModel[]> {
     await this.wait();
     return this.employees;
+  }
+
+  async getEmployee(id: string): Promise<EmployeeModel | null> {
+    await this.wait();
+    return this.employees.find((employee) => employee.id === id) || null;
   }
 
   async addEmployee(employee: Omit<EmployeeModel, 'id'>): Promise<boolean> {
@@ -56,3 +61,5 @@ class API {
 }
 
 export const api = API.getInstance();
+
+(window as any).api = api;

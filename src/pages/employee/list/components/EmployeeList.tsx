@@ -1,17 +1,25 @@
 import styled from '@emotion/styled';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Button } from '@chakra-ui/react';
+import type { Dispatch } from '@reduxjs/toolkit';
 
+import { Loading } from '@components';
 import { EMPLOYEE_ROUTERS, ROUTERS } from '@constants';
-import { useSelector } from 'react-redux';
-import { employeesSelector } from '@slices';
+import { employeesActions, employeesSelector } from '@slices';
 
-const Wrap = styled.div``;
+import { DeleteConfirmModal } from './DeleteConfirmModal';
 
 const WrapTableHead = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-bottom: 10px;
+`;
+
+const WrapTable = styled(TableContainer)`
+  position: relative;
+  min-height: 400px;
 `;
 
 const TableColumnActions = styled(Td)`
@@ -22,26 +30,42 @@ const TableColumnActions = styled(Td)`
 
 export const EmployeeList: React.FC = () => {
   const history = useHistory();
+  const dispatch = useDispatch<Dispatch<any>>();
   const employees = useSelector(employeesSelector.selectEmployeesData);
+  const transactionGetEmployees = useSelector(employeesSelector.selectTransactionGetEmployees);
+  const [deletingId, setDeletingId] = useState<string>();
+  const [loading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    dispatch(employeesActions.getEmployees());
+  }, []);
+
+  // * Get employee
+  useEffect(() => {
+    setIsLoading(transactionGetEmployees.type === 'pending');
+  }, [transactionGetEmployees]);
+
+  useEffect(() => {
+    if (transactionGetEmployees.type === 'finish') dispatch(employeesActions.resetTransactionGetEmployees());
+  }, [transactionGetEmployees]);
 
   const onClickAdd = () => history.push(`${ROUTERS.EMPLOYEE}${EMPLOYEE_ROUTERS.ADD}`);
 
-  const onClickEdit = (id: string) => {
-    console.log(id);
-  };
+  const onClickEdit = (id: string) => history.push(`${ROUTERS.EMPLOYEE}${EMPLOYEE_ROUTERS.EDIT}/${id}`);
 
   const onClickDelete = (id: string) => {
-    console.log(id);
+    setDeletingId(id);
   };
 
   return (
-    <Wrap>
+    <div>
       <WrapTableHead>
         <Button bg="primary" color="white" colorScheme="purple" onClick={onClickAdd}>
           Add
         </Button>
       </WrapTableHead>
-      <TableContainer>
+      <WrapTable>
+        {loading && <Loading />}
         <Table variant="simple">
           <Thead>
             <Tr>
@@ -73,7 +97,8 @@ export const EmployeeList: React.FC = () => {
             ))}
           </Tbody>
         </Table>
-      </TableContainer>
-    </Wrap>
+      </WrapTable>
+      <DeleteConfirmModal isOpen={Boolean(deletingId)} onClose={() => setDeletingId(undefined)} id={deletingId} />
+    </div>
   );
 };

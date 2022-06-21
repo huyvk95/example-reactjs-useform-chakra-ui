@@ -13,9 +13,13 @@ export const routes: RouteItem[] = [
     path: ROUTERS.EMPLOYEE,
     component: MainLayout,
     routes: [
-      { path: `${ROUTERS.EMPLOYEE}${EMPLOYEE_ROUTERS.LIST}`, component: PageListEmployee },
-      { path: `${ROUTERS.EMPLOYEE}${EMPLOYEE_ROUTERS.ADD}`, component: PageAddEmployee },
-      { path: `${ROUTERS.EMPLOYEE}${EMPLOYEE_ROUTERS.EDIT}`, component: PageEditEmployee },
+      { path: `${ROUTERS.EMPLOYEE}${EMPLOYEE_ROUTERS.LIST}`, title: 'Summary', component: PageListEmployee },
+      { path: `${ROUTERS.EMPLOYEE}${EMPLOYEE_ROUTERS.ADD}`, title: 'Add Employee', component: PageAddEmployee },
+      {
+        path: `${ROUTERS.EMPLOYEE}${EMPLOYEE_ROUTERS.EDIT}/:id`,
+        title: 'Edit Employee',
+        component: PageEditEmployee,
+      },
     ],
   },
 ];

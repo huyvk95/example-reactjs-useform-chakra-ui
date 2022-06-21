@@ -22,6 +22,10 @@ export const theme = extendTheme({
       body: {
         background: colors.background,
       },
+      '#root': {
+        position: 'relative',
+        minHeight: '100vh',
+      },
     },
   },
 });

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addEmployee, deleteEmployee, getEmployees, updateEmployee } from './thunk';
 
+import { addEmployee, deleteEmployee, getEmployees, updateEmployee } from './thunk';
 import { Slice, State } from './types';
 
 const initialState: State = {
@@ -19,6 +19,18 @@ const slice: Slice = createSlice({
   reducers: {
     setEmployees(state, payload) {
       state.employess = payload.payload;
+    },
+    resetTransactionGetEmployees(state) {
+      state.transactionGetEmployees = { type: 'created' };
+    },
+    resetTransactionAddEmployee(state) {
+      state.transactionAddEmployee = { type: 'created' };
+    },
+    resetTransactionUpdateEmployee(state) {
+      state.transactionUpdateEmployee = { type: 'created' };
+    },
+    resetTransactionDeleteEmployee(state) {
+      state.transactionDeleteEmployee = { type: 'created' };
     },
   },
   extraReducers: (builder) => {
@@ -70,7 +82,7 @@ const slice: Slice = createSlice({
 
 // > Export
 // * Action
-export const actions = { ...slice.actions };
+export const actions = { ...slice.actions, getEmployees, addEmployee, updateEmployee, deleteEmployee };
 
 // * Reducer
 export const { reducer } = slice;

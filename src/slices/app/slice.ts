@@ -12,6 +12,9 @@ const slice: Slice = createSlice({
   name: 'app',
   initialState,
   reducers: {
+    setRouterTitle: (state, payload) => {
+      state.title = payload.payload;
+    },
     toggleSidebarCollapse: (state) => ({
       ...state,
       isSidebarCollapse: !state.isSidebarCollapse,

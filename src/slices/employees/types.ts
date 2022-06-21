@@ -12,6 +12,10 @@ export type State = {
 
 type Actions = {
   setEmployees: (state: State, payload: PayloadAction<EmployeeModel[]>) => void;
+  resetTransactionGetEmployees: (state: State) => void;
+  resetTransactionAddEmployee: (state: State) => void;
+  resetTransactionUpdateEmployee: (state: State) => void;
+  resetTransactionDeleteEmployee: (state: State) => void;
 };
 
 export type Slice = SlideType<State, Actions, 'employees'>;
